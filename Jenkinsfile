@@ -1,24 +1,21 @@
 pipeline {
     agent any 
     stages {
-        stage('Clone Build') {
+        stage('Clone repo and clean it') {
             steps {
+                sh 'rm -rf Pipleline'
                 sh 'git clone https://github.com/LuckyReddyGIT/Pipeline.git'
+                sh 'mvn clean -f Pipeline'
             }
         }
         stage('Test') {
             steps {
-                sh 'mvn package'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
+                sh 'mvn test -f Pipeline'
             }
         }
-        stage('Deliver') {
+        stage('Deploy') {
             steps {
-                sh './jenkins/scripts/deliver.sh'
+                sh 'mvn package -f Pipeline'
             }
         }
     }
