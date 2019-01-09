@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Clone repo and clean it') {
             steps {
-                sh "rm -r Pipleline"
+                sh "rm -rf Pipleline"
                 sh "git clone https://github.com/LuckyReddyGIT/Pipeline.git"
                 sh "mvn clean -f Pipeline"
             }
